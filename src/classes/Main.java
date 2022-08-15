@@ -3,99 +3,104 @@ import java.util.Scanner;
 
 public class Main {
 	public static void main(String[] args) {
-		Window gameWindow = new Window();
 		Player player = new Player();
-		Enemy alien = new Enemy();
-		
-		
-		gameWindow.populate();
-		gameWindow.criaPlayer(5, 8);
-		 
-		player.setHealth(5);
-		player.setX(5);
+		player.setHealth(3);
+		player.setX(8);
 		player.setY(8);
 		
-		alien.setHealth(100);
-		alien.setX(alien.coordenadaGerador(9, 0));
-		alien.setY(alien.coordenadaGerador(9, 0));
+		Enemy enemy = new Enemy();
+		enemy.setHealth(100);
+		enemy.setX(enemy.coordenadaGerador(9, 0));
+		enemy.setY(enemy.coordenadaGerador(9, 0));
 		
-		gameWindow.criaEnemy(alien.getX(), alien.getY());
+		Window gameWindow = new Window();
+		gameWindow.populate();
+		gameWindow.createPlayer(3, 7);
 
+		gameWindow.createEnemy(enemy.getX(), enemy.getY());
+		
  		Scanner sc = new Scanner(System.in);
 		int userInput = 1;
-		//game logic;
-		int turnos = 1;
+		
 		while(userInput != 0) {
-			System.out.println("\n\n\nPlayer <3: [" + player.getHealth() + "] | Enemy HP:[" + alien.getHealth() + "]");
-			gameWindow.imprimeTabuleiro();
-			System.out.println(//controls
-					"\nTurno " + turnos
-					+ " \n   ^\n"
-					+ "   8\n"
-					
-					+ "< 4  6>\n"
-					+ "   2\n"
-					+ "   v \n"
-					+ "5 = ataque\n"
-					+ "[0 para Sair]Comando >:");
+			System.out.println("\n\n\nJogador: " + player.getHealth() + " | Inimigo: " + enemy.getHealth() + "%");
+			System.out.println("Acerte o inimigo\n");
+			gameWindow.drawBoard();
+			
+			
+			gameWindow.drawCommands();
+			
 			userInput = sc.nextInt();
-		 
-			if(userInput == 6 && player.getX()  < 9) {
-				player.goRight();;  //new object.x
-			}
-			else if(userInput == 4 && player.getX() > 0){
-				player.goLeft();
-			}else if (userInput == 8 && player.getY() > 0) {
-				player.goUp();
-			}else if(userInput == 2 && player.getY() < 9) {
-				player.goDown();
-			}else if(userInput == 5) {
-				gameWindow.imprimirTiro(player.getX(), player.getY());
-				gameWindow.imprimeTabuleiro();
-				if(player.getX() ==alien.getX() && player.getY() > alien.getY()) {
-					alien.setHealth(alien.getHealth() - 10);  //enemy gets damaged
+			switch (userInput) {
+			case 6:
+				if( player.getX()  < 9) {
+					player.goRight();
 				}
+				break;
+			case 4:
+				if( player.getX() > 0) {
+					player.goLeft();
+				}
+				break;
+			case 8:
+				if(player.getY() > 0) {
+					player.goUp();
+				}
+				break;
+			case 2:
+				if( player.getY() < 9) {
+					player.goDown();
+				}
+				break;
+			case 5:
+				gameWindow.drawShoot(player.getX(), player.getY());
+				//enemy gets damaged
+				if(player.getX() == enemy.getX() && player.getY() > enemy.getY()) {
+					enemy.setHealth(enemy.getHealth() - 10);  
+				}
+				break;
+			default:
+				break;
 			}
-			System.out.println("Fim do turno " + turnos);
-			turnos++;
-			//movements do alien
-			if(alien.getX() == 9) {
-				alien.setX(alien.getX() - 1);
-			}else if(alien.getX() == 0) {
-				alien.setX(alien.getX() + 1);
-			}else if(alien.getY() == 0) {
-				alien.setY(alien.getY() + 1);
-			}else if(alien.getY() == 9) {
-				alien.setY(alien.getY() - 1);
-			}else {
-				alien.setX(alien.getX() + alien.movimentoGerador());
-				alien.setY(alien.getY() + alien.movimentoGerador());
+
+			
+			switch (enemy.getX()) {
+			case 9:
+				enemy.setX(enemy.getX() - 1);
+				break;
+			case 0:
+				enemy.setX(enemy.getX() + 1);
+				break;
+			default:
+				if(enemy.getY() == 0) {
+					enemy.setY(enemy.getY() + 1);
+				}else if(enemy.getY() == 9) {
+					enemy.setY(enemy.getY() - 1);
+				}else {
+					enemy.setX(enemy.getX() + enemy.movimentoGerador());
+					enemy.setY(enemy.getY() + enemy.movimentoGerador());
+				}
+				break;
 			}
 			
 			// player receives damage
-			if(alien.getX() == player.getX() && alien.getY()==player.getY()) { //position do alien == player position => reseted positions && -1 life
+			if(enemy.getX() == player.getX() && enemy.getY()==player.getY()) { //position do enemy == player position => reseted positions && -1 life
 				player.setHealth(player.getHealth() - 1);
 				player.setX(5); player.setY(8);
-				alien.setX(alien.coordenadaGerador(9, 0));
+				enemy.setX(enemy.coordenadaGerador(9, 0));
 			}
-			
-			gameWindow.populate();//cleans the board
-			gameWindow.criaEnemy(alien.getX(),alien.getY());   // < e V prints the board with the new positions;
-			gameWindow.criaPlayer(player.getX(), player.getY());
-			
-			if (alien.getHealth()==0) {
-				System.out.println("\n\n\nVictory!"
-						+ "\nTurns: " + turnos 
-						+ "| <3:["+player.getHealth()+"]");
+
+			gameWindow.populate(); 
+			gameWindow.createPlayer(player.getX(), player.getY());
+			gameWindow.createEnemy(enemy.getX(),enemy.getY());
+
+			if (enemy.getHealth()==0) {
+				System.out.println("\n\nVocê derrotou o inimigoo!!!");
 				System.exit(0);
 			}else if(player.getHealth()==0) {
-				System.out.println("\n\n\nDefeat"
-						+ "Turns: " + turnos);
+				System.out.println("\n\nDerrota! Seu inimigo esta com:" + enemy.getHealth());
 				System.exit(0);
 			}
 		}
-		
-		
 	}
-
 }

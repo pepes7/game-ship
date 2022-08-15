@@ -23,15 +23,15 @@ public class Enemy {
 	public void setHealth(int health) {
 		this.health = health;
 	}
-	public int coordenadaGerador(int max, int min) { // numero inteiro de max a min
-		int range = max - min + 1; 
-		int resultado = (int)(Math.random() * range) + min;
-		return resultado;
+	public int coordenadaGerador(int max, int min) {
+		int range = max - min + 1;
+		int result = (int)(Math.random() * range) + min;
+		return result;
 	}
-	public int movimentoGerador() { //incrementa a coordenada em +1 ou - 1 no tabuleiro
-		Random rand = new Random();
-		int incremento = rand.nextInt(2) * 2 - 1;
-		return incremento;
+	
+	 //increments the coordinate by +1 or -1 on the board
+	public int movimentoGerador() {
+		return new Random().nextInt(2) * 2 - 1;
 	}
 
 }

@@ -16,23 +16,22 @@ public class Player {
 	public void setY(int y) {
 		this.y = y;
 	}
+	public void goUp() {
+		this.y = y - 1;
+	}
+	public void goDown() {
+		this.y = y + 1;
+	}
+	public void goLeft() {
+		this.x = x - 1;
+	}
+	public void goRight() {
+		this.x = x + 1;
+	}
 	public int getHealth() {
 		return health;
 	}
 	public void setHealth(int health) {
 		this.health = health;
-	}
-	public void goUp() {
-		setY(getY() - 1);
-
-	}
-	public void goDown() {
-		setY(getY() +1);
-	}
-	public void goLeft() {
-		setX(getX() - 1);
-	}
-	public void goRight() {
-		setX(getX() + 1);
 	}
 }
