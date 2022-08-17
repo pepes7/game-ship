@@ -5,7 +5,7 @@ public class Main {
 	public static void main(String[] args) {
 		Player player = new Player();
 		player.setHealth(3);
-		player.setX(8);
+		player.setX(5);
 		player.setY(8);
 		
 		Enemy enemy = new Enemy();
@@ -23,10 +23,10 @@ public class Main {
 		int userInput = 1;
 		
 		while(userInput != 0) {
-			System.out.println("\n\n\nJogador: " + player.getHealth() + " | Inimigo: " + enemy.getHealth() + "%");
+			System.out.println("\n\n\t\tGAME SHIP");
+			System.out.println("\nJogador: " + player.getHealth() + " | Inimigo: " + enemy.getHealth() + "%");
 			System.out.println("Acerte o inimigo\n");
 			gameWindow.drawBoard();
-			
 			
 			gameWindow.drawCommands();
 			

@@ -43,15 +43,16 @@ public class Window {
 	
 	public  void drawCommands () {
 		System.out.println("\nComandos");
+		System.out.println("------------------");
 		System.out.println(
-				 "    ^\n"
-				+ "   8\n"
-				+ "< 4  6>\n"
-				+ "   2\n"
-				+ "   v \n"
+				 " \n"
+				+ "8 = ^\n"
+				+ "4 = <\n"
+				+ "6 = >\n"
+				+ "2 = v\n"
 				+ "5 = Ataque\n"
 				+ "0 =  Sair do jogo\n\n"
-				+ "Comando :");
+				+ "Acao :");
 	}
 	
 	public void drawShoot(int x, int y) {
